@@ -27,7 +27,7 @@ To do that, this tool uses the "fping"-command.\
 The strength of this tool however, is that threading is supported.\
 \
 To use this tool, you have to specify a file that contains sites. \
-\
+
 TAGS:\
 The underlying tags can be used.\
 	-th	: Amount of threads. \
@@ -43,4 +43,4 @@ The underlying tags can be used.\
 EXAMPLE SYNTAX:\
 	aliveDB -th 8 -f sites.txt -t 2	  //Threads: 8; File: sites.txt; Intermediate time: 2 seconds\
 	aliveDB -f sites.txt		  //Threads: 4; File: sites.txt; Intermediate time: 0 seconds\
-	aliveDB -f domains.txt -t 1	  //Threads: 4; File: domains.txt; Intermediate time: 1 second\
+	aliveDB -f domains.txt -t 1	  //Threads: 4; File: domains.txt; Intermediate time: 1 second
