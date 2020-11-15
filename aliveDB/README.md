@@ -35,12 +35,15 @@ TAGS:
 The underlying tags can be used.
 -th	: Amount of threads. 
 	  Default = 4
+	  
 -t	: Time in seconds to wait after every request. This slows down the amount of requests
 	  per second.
 	  Default = 0 seconds
+	  
 -f	: File to use
 	  The file should contain 1 site per line so that this tool can handle each site one
 	  by one.
+	  
 
 
 EXAMPLE SYNTAX:
