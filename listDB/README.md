@@ -9,14 +9,14 @@ Python3 installed
 ## Set this tool up
 To setup this tool, you first have to install python3
 If you have a Debian OS, you can install python3 by the following command:\
-sudo apt-get install python3\
+sudo apt-get install python3
 
 Now, you have to convert this code to an executable:\
 chmod +x listDB.py
 
 ## Helpmenu
 This tool is being used to make a range of numbers.\
-You can make your own list with the tags below.\
+You can make your own list with the tags below.
     
     h : horizontal list\
     v : vertical list\
