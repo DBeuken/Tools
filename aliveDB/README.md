@@ -18,12 +18,9 @@ Otherwise, you can install golang on www.golang.org\
 To check if golang is installed properly, type in the following command:\
   go version\
 \
-\
-\
 Now, you can make this code an executable by the following command:\
   go build aliveDB.go\
-\
-\
+
 ## Helpmenu
 -------------------------------------------------------------------------
  __  __  ______  __      ______     __    __  ______  __   __  __  __
