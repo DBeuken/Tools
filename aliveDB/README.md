@@ -38,7 +38,7 @@ The underlying tags can be used.\
 	-f	: File to use\
 		  The file should contain 1 site per line so that this tool can handle each site one\
 		  by one.
-\
+
 
 EXAMPLE SYNTAX:\
 	aliveDB -th 8 -f sites.txt -t 2	  //Threads: 8; File: sites.txt; Intermediate time: 2 seconds\
