@@ -26,7 +26,7 @@ This tool can be used to check if websites are alive. \
 To do that, this tool uses the "fping"-command.\
 The strength of this tool however, is that threading is supported.\
 \
-To use this tool, you have to specify a file that contains sites. \
+To use this tool, you have to specify a file that contains sites.
 
 TAGS:\
 The underlying tags can be used.\
@@ -37,7 +37,7 @@ The underlying tags can be used.\
 		  Default = 0 seconds\
 	-f	: File to use\
 		  The file should contain 1 site per line so that this tool can handle each site one\
-		  by one.\
+		  by one.
 \
 
 EXAMPLE SYNTAX:\
