@@ -1,5 +1,5 @@
 # Tool: aliveDB
-This tool can be used to see if sites are up, down or unreachable.
+This tool can be used to see if sites are up, down or unreachable.\
 The strength of this tool, is that is uses threading.
 
 
