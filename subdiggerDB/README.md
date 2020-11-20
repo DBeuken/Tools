@@ -24,7 +24,7 @@ Now, you can make this code an executable by the following command:\
 ## Helpmenu
 
 This tool can be used to search for subdomains. \
-To do that, you can use your own wordlist.\
+To do that, you can use your own wordlist.
 
 TAGS-----------------------------------------\
 -t	: Target. This is the site you aim at.\
