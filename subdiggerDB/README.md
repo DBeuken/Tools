@@ -23,32 +23,23 @@ Now, you can make this code an executable by the following command:\
 
 ## Helpmenu
 
- _    _      _
-| |  | |    | |
-| |__| | ___| |_ __  _ ______   ___ _ __  _   _
-|  __  |/ _ \ | '_ \| '_   _ \ / _ \  _ \| | | |
-| |  | |  __/ | |_) | | | | | |  __/ | | | |_| |
-|_|  |_|\___|_|  __/|_| |_| |_|\___|_| |_|\__,_|
-              | |
-              |_|
+This tool can be used to search for subdomains. \
+To do that, you can use your own wordlist.\
 
-This tool can be used to search for subdomains. 
-To do that, you can use your own wordlist.
-
-TAGS-----------------------------------------
--t	: Target. This is the site you aim at.
--f	: File. The file you want to use to discover subdomains.
--th	: Threads. Amount of workers.
-	  default = 4
--d	: Delay. The amount of time in seconds to wait before making the next request for 
-	  every thread.
-	  default = 0
--s	: HTTPS. Use https instead of http.
+TAGS-----------------------------------------\
+-t	: Target. This is the site you aim at.\
+-f	: File. The file you want to use to discover subdomains.\
+-th	: Threads. Amount of workers.\
+	  default = 4\
+-d	: Delay. The amount of time in seconds to wait before making the next request for \
+	  every thread.\
+	  default = 0\
+-s	: HTTPS. Use https instead of http.\
 	  default = http
 
 
-EXAMPLE SYNTAX-------------------------------
-subdiggerDB -f subdoms.txt -t youtube.com	  	  //file: subdoms.txt; target: youtube.com;
-							    threads: 4; delay: 0 seconds; http
-subdiggerDB -f subdoms.txt -t youtube.com -th 10 -d 2 -s  //file: subdoms.txt; target: youtube.com; 
+EXAMPLE SYNTAX-------------------------------\
+subdiggerDB -f subdoms.txt -t youtube.com	  	  //file: subdoms.txt; target: youtube.com;\
+							    threads: 4; delay: 0 seconds; http\
+subdiggerDB -f subdoms.txt -t youtube.com -th 10 -d 2 -s  //file: subdoms.txt; target: youtube.com; \
 							    threads: 10; Delay: 2 seconds; https
