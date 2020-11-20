@@ -1,0 +1,20 @@
+This tool can be used to search for subdomains. \
+To do that, you can use your own wordlist.
+
+TAGS-----------------------------------------\
+-t	: Target. This is the site you aim at.\
+-f	: File. The file you want to use to discover subdomains.\
+-th	: Threads. Amount of workers.\
+	  default = 4\
+-d	: Delay. The amount of time in seconds to wait before making the next request for \
+	  every thread.\
+	  default = 0\
+-s	: HTTPS. Use https instead of http.\
+	  default = http
+
+
+EXAMPLE SYNTAX-------------------------------\
+subdiggerDB -f subdoms.txt -t youtube.com	  	  //file: subdoms.txt; target: youtube.com;\
+							    threads: 4; delay: 0 seconds; http\
+subdiggerDB -f subdoms.txt -t youtube.com -th 10 -d 2 -s  //file: subdoms.txt; target: youtube.com; \
+							    threads: 10; Delay: 2 seconds; https
