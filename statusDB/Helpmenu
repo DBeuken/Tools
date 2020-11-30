@@ -1,0 +1,19 @@
+_________________________
+ 
+       HELPMENU
+_________________________
+
+This tool can be used to get the response codes of websites.
+To do that, you can use your own wordlist.
+
+TAGS--------------------------------------
+ -th	: Amount of Threads.
+ 	  Default = 4
+ -f	: File
+ -d	: Delay in seconds
+ 	  Default = 0
+
+EXAMPLE SYNTAX----------------------------
+statusDB -f sites.txt			//File: sites.txt; Threads: 4; Delay: 4
+statusDB -f sites.txt -th 10		//File: sites.txt; Threads: 10; Delay: 0
+statusDB -f sites.txt -th 2 -d 5	//File: sites.txt; Threads: 2; Delay: 5
