@@ -2,124 +2,131 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 	"flag"
+	"strconv"
 	"os"
-	"io/ioutil"
 	"strings"
+	"io/ioutil"
 	"net/http"
-	"time"
 	"sync"
 )
 
-var banner = `       __             __                     ____    ____      
-      /\ \__         /\ \__                 /\  _ \ /\  _ \    
-  ____\ \  _\   ___  \ \  _\  __  __    ____\ \ \/\ \ \ \_\ \  
- /  __\\ \ \/  / __ \ \ \ \/ /\ \/\ \  /  __\\ \ \ \ \ \  _ < 
-/\__   \\ \ \_/\ \_\ \_\ \ \_\ \ \_\ \/\__   \\ \ \_\ \ \ \_\ \
-\/\____/ \ \__\ \__/ \_\\ \__\\ \____/\/\____/ \ \____/\ \____/
- \/___/   \/__/\/__/\/_/ \/__/ \/___/  \/___/   \/___/  \/___/ 
-                                                               
-`
+var banner = `         __             __                     ____    ____
+        /\ \__         /\ \__                 /\  _ \ /\  _ \
+    ____\ \  _\    __  \ \  _\  __  __    ____\ \ \/\ \ \ \_\ \
+   /  __\\ \ \/  / __ \ \ \ \/ /\ \/\ \  /  __\\ \ \ \ \ \  _ <
+  /\__   \\ \ \_/\ \_\ \_\ \ \_\ \ \_\ \/\__   \\ \ \_\ \ \ \_\ \
+  \/\____/ \ \__\ \__/ \_\\ \__\\ \____/\/\____/ \ \____/\ \____/
+   \/___/   \/__/\/__/\/_/ \/__/ \/___/  \/___/   \/___/  \/___/
+     
+         
+       v.1.2.1`
 
-var helpmenu = `_________________________
- 
-       HELPMENU
-_________________________
+var helpmenu = `_______________
 
-This tool can be used to get the response codes of websites.
-To do that, you can use your own wordlist.
+   HELPMENU
+_______________
 
-TAGS--------------------------------------
- -th	: Amount of Threads.
- 	  Default = 4
- -f	: File
- -d	: Delay in seconds
- 	  Default = 0
+This tool can be used to get the status code of a list containing sites.
 
-EXAMPLE SYNTAX----------------------------
-statusDB -f sites.txt			//File: sites.txt; Threads: 4; Delay: 4
-statusDB -f sites.txt -th 10		//File: sites.txt; Threads: 10; Delay: 0
-statusDB -f sites.txt -th 2 -d 5	//File: sites.txt; Threads: 2; Delay: 5
+TAGS______________________________________
+
+  -f		File
+  -th		Threads. Default=10
+  -http		Use http-protocol
+  -https	Use https-protocol
+  		If http and https are not specified, http will be used
+  -nobanner	Don't show the banner
+  -help		Show this helpmenu
+
+
+EXAMPLE SYNTAX____________________________
+  statusDB -f list.txt -th 4 -http -https --nobanner
+  statusDB -f list.txt -https	
 `
 
 var wg sync.WaitGroup
 
-func get_status(file_split []string, delay int) {
-	for i := 0; i < len(file_split); i++ {
-		response, err := http.Get(file_split[i])
+func worker(sites []string) {
+	for i := 0; i < len(sites); i++ {
+		response, err := http.Get(sites[i])
 		if (err != nil) {
-			fmt.Println("error			" + file_split[i])
-		} else if (len(http.StatusText(response.StatusCode)) < 5) {
-			fmt.Println(strconv.Itoa(response.StatusCode) + "	" + http.StatusText(response.StatusCode) + "		" + file_split[i])
+			fmt.Println("-	" + string(sites[i]))
 		} else {
-			fmt.Println(strconv.Itoa(response.StatusCode) + "	" + http.StatusText(response.StatusCode) + "	" + file_split[i])
+			fmt.Println(strconv.Itoa(response.StatusCode) + "	" + string(sites[i]))
 		}
-		time.Sleep(time.Duration(delay) * time.Second)
 	}
 	wg.Done()
 }
 
-func start(file_split []string, delay int, threads int) {
-	for t := 0; t < threads; t++ {
-		var sites []string
-		for site_loop := t; site_loop < len(file_split); site_loop = site_loop + threads {
-			sites = append(sites, file_split[site_loop])
-		}
-		wg.Add(1)
-		go get_status(sites, delay)
-	}
-	wg.Wait()
-}
-
-func fileread(file string) string {
-	filetext, err := ioutil.ReadFile(file)
-	if (err != nil) {
-		fmt.Println("ERROR: file doesn't exist\n")
-		fmt.Println(helpmenu)
-		os.Exit(3)
-		return "-"
-	} else {
-		return string(filetext)
-	}
-}
-
 func main() {
-	var threads_str string
-	var file string
-	var delay_str string
-	flag.StringVar(&threads_str, "th", "Threads not selected", "-")
-	flag.StringVar(&file, "f", "File not selected", "-")
-	flag.StringVar(&delay_str, "d", "Delay not selected", "-")
-	help_tag := flag.Bool("help", false, "-")
+	var threads int
+	flag.IntVar(&threads, "th", 10, "Amount of threads. Specified in integers")
+	var file_name string
+	flag.StringVar(&file_name, "f", "not selected", "File not selected")
+	http := flag.Bool("http", false, "Use http")
+	https := flag.Bool("https", false, "Use https")
+	nobanner := flag.Bool("nobanner", false, "Don't show the banner")
+	help := flag.Bool("help", false, "stdout helpmenu")
+
 	flag.Parse()
 
-	if (strconv.FormatBool(*help_tag) == "true") {
+	if (*help == true) {
+		fmt.Println(helpmenu)
+		os.Exit(3)
+	} else if (file_name == "not selected") {
+		fmt.Println("ERROR: File not selected\n")
 		fmt.Println(helpmenu)
 		os.Exit(3)
 	}
 
-	filetext := fileread(file)
-
-	threads, err := strconv.Atoi(threads_str)
+	file_byte, err := ioutil.ReadFile(file_name)
 	if (err != nil) {
-		threads = 4
+		fmt.Println("ERROR: Problem with reading the file\n")
+		fmt.Println(helpmenu)
+		os.Exit(3)
+	}
+	file := string(file_byte)
+
+	file1 := strings.Replace(file, "http://", "", -1)
+	file2 := strings.Replace(file1, "https://", "", -1)
+	file_split := strings.Split(file2, "\n")
+
+	var sites []string
+
+	if (*http == true || *http == false && *https == false) {
+		for number := 0; number < len(file_split) -1; number++ {
+			sites = append(sites, "http://" + string(file_split[number]))
+		}
+	}
+	if (*https == true) {
+		for number := 0; number < len(file_split) -1; number++ {
+			sites = append(sites, "https://" + string(file_split[number]))
+		}
 	}
 
-	delay, err := strconv.Atoi(delay_str)
-	if (err != nil) {
-		delay = 0
+	if (*nobanner == false) {
+		fmt.Println(banner)
+		fmt.Println("_________________________________\n")
+		fmt.Println(" :: Theads:	" + strconv.Itoa(threads))
+		fmt.Println(" :: File:	" + file_name)
+		if (*https == true && *http == true) {
+			fmt.Println(" :: Protocol:	https, http")
+		} else if (*https == true && *http == false) {
+			fmt.Println(" :: Protocol:	https")
+		} else {
+			fmt.Println(" :: Protocol:	http")
+		}
+		fmt.Println("_________________________________\n")
 	}
 
-	file_split := strings.Split(filetext, "\n")
-
-	fmt.Println(banner)
-	fmt.Println("       v1.0.0")
-	fmt.Println("___________________________________________________________________________\n")
-	fmt.Println(" :: Threads:	" + strconv.Itoa(threads))
-	fmt.Println(" :: File:	" + file)
-	fmt.Println(" :: Delay:	" + strconv.Itoa(delay))
-	fmt.Println("___________________________________________________________________________\n")
-	start(file_split, delay, threads)
-
+	for number := 0; number < threads; number++ {
+		var threads_sites []string
+		for i := number; i < len(sites); i = i + threads {
+			threads_sites = append(threads_sites, sites[i])
+		}
+		wg.Add(1)
+		go worker(threads_sites)
+	}
+	wg.Wait()
 }
