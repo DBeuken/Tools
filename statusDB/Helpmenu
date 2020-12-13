@@ -1,19 +1,21 @@
-_________________________
- 
-       HELPMENU
-_________________________
+_______________
 
-This tool can be used to get the response codes of websites.
-To do that, you can use your own wordlist.
+   HELPMENU
+_______________
 
-TAGS--------------------------------------
- -th	: Amount of Threads.
- 	  Default = 4
- -f	: File
- -d	: Delay in seconds
- 	  Default = 0
+This tool can be used to get the status code of a list containing sites.
 
-EXAMPLE SYNTAX----------------------------
-statusDB -f sites.txt			//File: sites.txt; Threads: 4; Delay: 4
-statusDB -f sites.txt -th 10		//File: sites.txt; Threads: 10; Delay: 0
-statusDB -f sites.txt -th 2 -d 5	//File: sites.txt; Threads: 2; Delay: 5
+TAGS______________________________________
+
+  -f		File
+  -th		Threads. Default=10
+  -http		Use http-protocol
+  -https	Use https-protocol
+  		If http and https are not specified, http will be used
+  -nobanner	Don't show the banner
+  -help		Show this helpmenu
+
+
+EXAMPLE SYNTAX____________________________
+  statusDB -f list.txt -th 4 -http -https --nobanner
+  statusDB -f list.txt -https	
