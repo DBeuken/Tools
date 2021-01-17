@@ -1,4 +1,4 @@
-# Tool: aliveDB
+# Tool: DDuD
 This tool can be used to scan ports of a site (target).\
 You can also specify a file which contains targets.
 
